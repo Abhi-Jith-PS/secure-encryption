@@ -1,22 +1,47 @@
 package com.aspire.secureencryption;
 
-import com.getcapacitor.JSObject;
+import com.getcapacitor.NativePlugin;
 import com.getcapacitor.Plugin;
-import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
+import com.getcapacitor.JSObject;
 import com.getcapacitor.annotation.CapacitorPlugin;
 
 @CapacitorPlugin(name = "SecureEncryption")
 public class SecureEncryptionPlugin extends Plugin {
 
-    private SecureEncryption implementation = new SecureEncryption();
+    @PluginMethod
+    public void encrypt(JSObject call) {
+        try {
+            String plaintext = call.getString("plaintext");
+            if (plaintext == null) {
+                call.reject("Plaintext is required");
+                return;
+            }
+
+            String ciphertext = SecureEncryption.encrypt(plaintext);
+            JSObject result = new JSObject();
+            result.put("ciphertext", ciphertext);
+            call.resolve(result);
+        } catch (Exception e) {
+            call.reject("Encryption failed", e);
+        }
+    }
 
     @PluginMethod
-    public void echo(PluginCall call) {
-        String value = call.getString("value");
+    public void decrypt(JSObject call) {
+        try {
+            String ciphertext = call.getString("ciphertext");
+            if (ciphertext == null) {
+                call.reject("Ciphertext is required");
+                return;
+            }
 
-        JSObject ret = new JSObject();
-        ret.put("value", implementation.echo(value));
-        call.resolve(ret);
+            String plaintext = SecureEncryption.decrypt(ciphertext);
+            JSObject result = new JSObject();
+            result.put("plaintext", plaintext);
+            call.resolve(result);
+        } catch (Exception e) {
+            call.reject("Decryption failed", e);
+        }
     }
 }

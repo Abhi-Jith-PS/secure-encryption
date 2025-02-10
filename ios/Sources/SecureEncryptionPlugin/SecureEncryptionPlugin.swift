@@ -1,23 +1,32 @@
 import Foundation
 import Capacitor
 
-/**
- * Please read the Capacitor iOS Plugin Development Guide
- * here: https://capacitorjs.com/docs/plugins/ios
- */
 @objc(SecureEncryptionPlugin)
-public class SecureEncryptionPlugin: CAPPlugin, CAPBridgedPlugin {
-    public let identifier = "SecureEncryptionPlugin"
-    public let jsName = "SecureEncryption"
-    public let pluginMethods: [CAPPluginMethod] = [
-        CAPPluginMethod(name: "echo", returnType: CAPPluginReturnPromise)
-    ]
-    private let implementation = SecureEncryption()
+public class SecureEncryptionPlugin: CAPPlugin {
+    
+    @objc func encrypt(_ call: CAPPluginCall) {
+        guard let plaintext = call.getString("plaintext") else {
+            call.reject("Plaintext is required")
+            return
+        }
 
-    @objc func echo(_ call: CAPPluginCall) {
-        let value = call.getString("value") ?? ""
-        call.resolve([
-            "value": implementation.echo(value)
-        ])
+        if let ciphertext = SecureEncryption.encrypt(plaintext) {
+            call.resolve(["ciphertext": ciphertext])
+        } else {
+            call.reject("Encryption failed")
+        }
+    }
+
+    @objc func decrypt(_ call: CAPPluginCall) {
+        guard let ciphertext = call.getString("ciphertext") else {
+            call.reject("Ciphertext is required")
+            return
+        }
+
+        if let plaintext = SecureEncryption.decrypt(ciphertext) {
+            call.resolve(["plaintext": plaintext])
+        } else {
+            call.reject("Decryption failed")
+        }
     }
 }

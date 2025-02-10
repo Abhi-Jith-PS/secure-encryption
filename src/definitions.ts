@@ -1,3 +1,5 @@
 export interface SecureEncryptionPlugin {
-  echo(options: { value: string }): Promise<{ value: string }>;
+  encrypt(options: { plaintext: string }): Promise<{ ciphertext: string }>;
+  decrypt(options: { ciphertext: string }): Promise<{ plaintext: string }>;
+  generateKey(): Promise<{ success: boolean }>;  // Ensure this is defined
 }
