@@ -1,8 +1,8 @@
 package com.aspire.secureencryption;
 
-import com.getcapacitor.NativePlugin;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginMethod;
+import com.getcapacitor.PluginCall;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.annotation.CapacitorPlugin;
 
@@ -10,7 +10,7 @@ import com.getcapacitor.annotation.CapacitorPlugin;
 public class SecureEncryptionPlugin extends Plugin {
 
     @PluginMethod
-    public void encrypt(JSObject call) {
+    public void encrypt(PluginCall call) {
         try {
             String plaintext = call.getString("plaintext");
             if (plaintext == null) {
@@ -28,7 +28,7 @@ public class SecureEncryptionPlugin extends Plugin {
     }
 
     @PluginMethod
-    public void decrypt(JSObject call) {
+    public void decrypt(PluginCall call) {  
         try {
             String ciphertext = call.getString("ciphertext");
             if (ciphertext == null) {
