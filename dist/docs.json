@@ -1,0 +1,57 @@
+{
+  "api": {
+    "name": "SecureEncryptionPlugin",
+    "slug": "secureencryptionplugin",
+    "docs": "",
+    "tags": [],
+    "methods": [
+      {
+        "name": "encrypt",
+        "signature": "(options: { plaintext: string; }) => Promise<{ ciphertext: string; }>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "{ plaintext: string; }"
+          }
+        ],
+        "returns": "Promise<{ ciphertext: string; }>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "encrypt"
+      },
+      {
+        "name": "decrypt",
+        "signature": "(options: { ciphertext: string; }) => Promise<{ plaintext: string; }>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "{ ciphertext: string; }"
+          }
+        ],
+        "returns": "Promise<{ plaintext: string; }>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "decrypt"
+      },
+      {
+        "name": "generateKey",
+        "signature": "() => Promise<{ success: boolean; }>",
+        "parameters": [],
+        "returns": "Promise<{ success: boolean; }>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "generatekey"
+      }
+    ],
+    "properties": []
+  },
+  "interfaces": [],
+  "enums": [],
+  "typeAliases": [],
+  "pluginConfigs": []
+}
